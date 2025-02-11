@@ -1,0 +1,319 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "TodoLists",
+    "description": "這是我練習使用Node.js製作網頁所使用的API，以下是4個CRUD的Restful Api。"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/todos/": {
+      "get": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "取得所有Todo",
+        "parameters": [
+          {
+            "name": "x-requested-with",
+            "in": "header",
+            "description": "Chinese:\n   預設:渲染todos頁面\n   XMLHttpRequest: 取得全部todo\n   English:\n   default: render todos page\n   XMLHttpRequest: get all todo",
+            "schema": {
+              "type": "string",
+              "example": "XMLHttpRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "No": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "這是第一筆資料!"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "Todo"
+                  },
+                  "dateStart": {
+                    "type": "string",
+                    "example": "2024-07-15"
+                  },
+                  "dateEnd": {
+                    "type": "string",
+                    "example": "2024-07-15"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "建立新Todo",
+        "parameters": [
+          {
+            "name": "todo detail",
+            "in": "body",
+            "description": "傳入參數:\n   status only can be one of Todo,Progressing,Completed,Cancelled",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "option"
+                },
+                "dateStart": {
+                  "type": "string",
+                  "example": "yyyy-mm-dd"
+                },
+                "dateEnd": {
+                  "type": "string",
+                  "example": "yyyy-mm-dd"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "No": {
+                  "type": "number",
+                  "example": 45
+                },
+                "title": {
+                  "type": "string",
+                  "example": "新增資料"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Completed"
+                },
+                "dateStart": {
+                  "type": "string",
+                  "example": "2024-08-14"
+                },
+                "dateEnd": {
+                  "type": "string",
+                  "example": "2024-08-14"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "string",
+              "example": "title,status,dateStart,dateEnd 格式錯誤!",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/todos/{No}": {
+      "patch": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "更新現有Todo",
+        "parameters": [
+          {
+            "name": "No",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Number of todo"
+          },
+          {
+            "name": "todo detail",
+            "in": "body",
+            "description": "傳入參數:\n   status only can be one of Todo,Progressing,Completed,Cancelled",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "any"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "option"
+                },
+                "dateStart": {
+                  "type": "string",
+                  "example": "yyyy-mm-dd"
+                },
+                "dateEnd": {
+                  "type": "string",
+                  "example": "yyyy-mm-dd"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "object after patch",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "No": {
+                  "type": "number",
+                  "example": 45
+                },
+                "title": {
+                  "type": "string",
+                  "example": "新增資料"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Completed"
+                },
+                "dateStart": {
+                  "type": "string",
+                  "example": "2024-08-14"
+                },
+                "dateEnd": {
+                  "type": "string",
+                  "example": "2024-08-14"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "string",
+              "example": "title,status,dateStart,dateEnd 格式錯誤!",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "When todo is not exist will get this text.",
+            "schema": {
+              "type": "string",
+              "example": "Data is not exist!",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Todo"
+        ],
+        "description": "刪除現有Todo",
+        "parameters": [
+          {
+            "name": "No",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Number of todo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "deleted object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "No": {
+                  "type": "number",
+                  "example": 45
+                },
+                "title": {
+                  "type": "string",
+                  "example": "新增資料"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Completed"
+                },
+                "dateStart": {
+                  "type": "string",
+                  "example": "2024-08-14"
+                },
+                "dateEnd": {
+                  "type": "string",
+                  "example": "2024-08-14"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "When todo is not exist will get this text.",
+            "schema": {
+              "type": "string",
+              "example": "Data is not exist!",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
